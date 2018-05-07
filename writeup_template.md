@@ -57,7 +57,7 @@ signs data set:
 Here is an exploratory visualization of the data set. It is a bar chart showing how the data distribution varies between training, validation and test dataset.
 
 #### Remarks:
-* As we can see, all the dataset is skewed.
+* As we can see, all the dataset is skewed. Some classes have more samples than others.
 
 ![alt text][viz1]
 
@@ -97,21 +97,33 @@ My final model consisted of the following layers:
 
 | Layer         		|     Description	        					|
 |:---------------------:|:---------------------------------------------:|
-| Input         		| 32x32x3 RGB image   							|
-| Convolution 3x3     	| 1x1 stride, same padding, outputs 32x32x64 	|
+| Input         		| 32x32x1 Grayscale image   							|
+| Convolution 5x5x1x6     	| 1x1 stride, VALID padding, outputs 28x28x6 	|
+| Batch normalization | outputs 28x28x6 |
 | RELU					|												|
-| Max pooling	      	| 2x2 stride,  outputs 16x16x64 				|
-| Convolution 3x3	    | etc.      									|
-| Fully connected		| etc.        									|
-| Softmax				| etc.        									|
-|						|												|
-|						|												|
-
+| Max pooling	      	| 2x2 stride,  outputs 14x14x6 				|
+| Convolution 5x5x1x16     	| 1x1 stride, VALID padding, outputs 10x10x16 	|
+| RELU					|												|
+| Max pooling	      	| 2x2 stride,  outputs 5x5x16 				|
+| Flatten		| outputs 400        									|
+| Fully connected		| outputs 120        									|
+| Fully connected		| outputs 84        									|
+| Fully connected		| outputs 43        									|
+| Softmax				| outputs 43        									|
 
 
 #### 3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
 
 To train the model, I used an ....
+
+|Model Property| Configuration |
+|:------------:|:-------------:|
+|Optimizer | Adam |
+|Batch Size| 32 |
+|Number of epochs| 20 |
+|Learning rate| 0.001 |
+|Weight initialization|tensorflow.truncated_normal(mu=0, sigma=0.1)|
+|Batch normalization|epsilon=1e-5|
 
 #### 4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
 
