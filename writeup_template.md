@@ -1,11 +1,5 @@
 # **Traffic Sign Recognition**
 
-## Writeup
-
-### You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
-
----
-
 **Build a Traffic Sign Recognition Project**
 
 The goals / steps of this project are the following:
@@ -21,6 +15,10 @@ The goals / steps of this project are the following:
 
 [viz1]: ./examples/visualization1.jpg "Dataset Distribution"
 [viz2]: ./examples/visualization2.jpg "Traffic Sign sample"
+[viz3]: ./examples/visualization3.jpg "Image Augmentation"
+[viz4]: ./examples/augmented-data-distribution.jpg "Dataset Distribution after augmentation"
+[viz5]: ./examples/visualization5.jpg "Image Flipping"
+[viz6]: ./examples/visualization6.jpg "Performance on new images"
 [image2]: ./examples/grayscale.jpg "Grayscaling"
 [image3]: ./examples/random_noise.jpg "Random Noise"
 [image4]: ./examples/gts_1.jpg "Road work"
@@ -72,24 +70,37 @@ To further explore, the actual traffic sign samples are also visualized.
 
 #### 1. Describe how you preprocessed the image data. What techniques were chosen and why did you choose these techniques? Consider including images showing the output of each preprocessing technique. Pre-processing refers to techniques such as converting to grayscale, normalization, etc. (OPTIONAL: As described in the "Stand Out Suggestions" part of the rubric, if you generated additional data for training, describe why you decided to generate additional data, how you generated the data, and provide example images of the additional data. Then describe the characteristics of the augmented training set like number of images in the set, number of images for each class, etc.)
 
-As a first step, I decided to convert the images to grayscale because ...
+I have generated additional data based to provide more training samples and also combat data variance related to brightness, rotation etc.
 
-Here is an example of a traffic sign image before and after grayscaling.
+To generate additional data, I mainly used techniques suggested in project rubrics.
+* Flipping
+* Rotation
+* Scaling
+* Histogram Equalization
+* Intensity Rescaling
+* Gamma Adjustment
+
+This is an example of a traffic sign image before and after flipping method applied:
+![alt text][viz5]
+
+This is an example of a traffic sign image before and after augmentation method applied:
+![alt text][viz3]
+
+For traffic signs having less than 600 samples, new image per augmentation technique was added to the dataset. For other signs, new images were added randomly.
+
+The distribution between the original data set and the augmented data set is as follows:
+![alt text][viz4]
+
+The distribution is mostly same, however the number of samples increased.
+
+- Training samples before augmentation: 34799
+- Training samples before augmentation: 103079
+
+Before passing to training pipeline, the augmented dataset is converted to grayscale.
 
 ![alt text][image2]
 
-As a last step, I normalized the image data because ...
-
-I decided to generate additional data because ...
-
-To add more data to the the data set, I used the following techniques because ...
-
-Here is an example of an original image and an augmented image:
-
-![alt text][image3]
-
-The difference between the original data set and the augmented data set is the following ...
-
+Batch normalization step was added to the original LeNet architecture to reduce influence due to random weight initialization and to facilitate faster convergence.
 
 #### 2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
 
@@ -132,16 +143,10 @@ My final model results were:
 * validation set accuracy of 97.19%
 * test set accuracy of 94.71%
 
-If an iterative approach was chosen:
-* What was the first architecture that was tried and why was it chosen?
-* What were some problems with the initial architecture?
-* How was the architecture adjusted and why was it adjusted? Typical adjustments could include choosing a different model architecture, adding or taking away layers (pooling, dropout, convolution, etc), using an activation function or changing the activation function. One common justification for adjusting an architecture would be due to overfitting or underfitting. A high accuracy on the training set but low accuracy on the validation set indicates over fitting; a low accuracy on both sets indicates under fitting.
-* Which parameters were tuned? How were they adjusted and why?
-* What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?
-
 If a well known architecture was chosen:
 * What architecture was chosen?
- - LeNet-5 architecture was chosen as suggested by Udacity team
+ - LeNet-5 architecture was chosen as suggested by Udacity team.
+ - However, a batch normalization layer was added to skip normalization during preprocessing.
 
 * Why did you believe it would be relevant to the traffic sign application?
  - As LeNet has considerable performance for MNIST image classification, I was convinced to use for traffic sign classification as well.
@@ -156,10 +161,13 @@ If a well known architecture was chosen:
 
 Here are five German traffic signs that I found on the web:
 
-![alt text][image4] ![alt text][image5] ![alt text][image6]
-![alt text][image7] ![alt text][image8]
-
-The first image might be difficult to classify because ...
+| Image			        |     Comment	        					|
+|:---------------------:|:---------------------------------------------:|
+|![alt text][image8]|Moderately easy|
+|![alt text][image5]|Moderately easy|
+|![alt text][image4]|Difficult due to blur|
+|![alt text][image7]|Moderately Difficult due to background noise|
+|![alt text][image6]|Moderately easy|
 
 #### 2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
 
@@ -167,31 +175,19 @@ Here are the results of the prediction:
 
 | Image			        |     Prediction	        					|
 |:---------------------:|:---------------------------------------------:|
+| General Caution			| General Caution      							|
+| Yield					    | Yield											|
+| Road Work	      		| Road Work					 				|
 | Stop Sign      		| Stop sign   									|
-| U-turn     			| U-turn 										|
-| Yield					| Yield											|
-| 100 km/h	      		| Bumpy Road					 				|
-| Slippery Road			| Slippery Road      							|
+| Priority Road     			| Priority Road	|
 
-
-The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
+The model was able to correctly guess 5 of the 5 traffic signs, which gives an accuracy of 100%. This compares favorably to the accuracy on the test set of 94%.
 
 #### 3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
 
-The code for making predictions on my final model is located in the 11th cell of the Ipython notebook.
+The model is pretty certain about its predictions for each sign. However, for Yield, it is bit confused with Speed limit (50km/h). Probably this is caused by noisy training sample.
 
-For the first image, the model is relatively sure that this is a stop sign (probability of 0.6), and the image does contain a stop sign. The top five soft max probabilities were
-
-| Probability         	|     Prediction	        					|
-|:---------------------:|:---------------------------------------------:|
-| .60         			| Stop sign   									|
-| .20     				| U-turn 										|
-| .05					| Yield											|
-| .04	      			| Bumpy Road					 				|
-| .01				    | Slippery Road      							|
-
-
-For the second image ...
+![alt text][viz6]
 
 ### (Optional) Visualizing the Neural Network (See Step 4 of the Ipython notebook for more details)
 #### 1. Discuss the visual output of your trained network's feature maps. What characteristics did the neural network use to make classifications?
