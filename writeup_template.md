@@ -128,9 +128,9 @@ To train the model, I used an ....
 #### 4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
 
 My final model results were:
-* training set accuracy of ?
-* validation set accuracy of ?
-* test set accuracy of ?
+* training set accuracy of 99.80%
+* validation set accuracy of 97.19%
+* test set accuracy of 94.71%
 
 If an iterative approach was chosen:
 * What was the first architecture that was tried and why was it chosen?
@@ -141,8 +141,13 @@ If an iterative approach was chosen:
 
 If a well known architecture was chosen:
 * What architecture was chosen?
+ - LeNet-5 architecture was chosen as suggested by Udacity team
+
 * Why did you believe it would be relevant to the traffic sign application?
+ - As LeNet has considerable performance for MNIST image classification, I was convinced to use for traffic sign classification as well.
+
 * How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well?
+ - For all the dataset, final model accuracy is above the acceptable level of accuracy (93%). However, the model is overfitting as accuracy for validation dataset is higher than that of test dataset.
 
 
 ### Test a Model on New Images
