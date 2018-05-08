@@ -139,9 +139,9 @@ To train the model, I used an ....
 #### 4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
 
 My final model results were:
-* training set accuracy of 99.80%
-* validation set accuracy of 97.19%
-* test set accuracy of 94.71%
+* training set accuracy of 99.65%
+* validation set accuracy of 96.87%
+* test set accuracy of 93.60%
 
 If a well known architecture was chosen:
 * What architecture was chosen?
@@ -185,7 +185,7 @@ The model was able to correctly guess 5 of the 5 traffic signs, which gives an a
 
 #### 3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
 
-The model is pretty certain about its predictions for each sign. However, for Yield, it is bit confused with Speed limit (50km/h). Probably this is caused by noisy training sample.
+The model is pretty certain about its predictions for each sign. However, for Stop sign, it is bit confused with Turn left ahead. Probably this is caused by training sample with background noise.
 
 ![alt text][viz6]
 
